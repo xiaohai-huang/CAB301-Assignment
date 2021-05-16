@@ -5,7 +5,7 @@ using System.Text;
 namespace Assignment
 {
     //The specification of Member ADT
-    interface iMember
+    interface iMember: IComparable<iMember>
     {
         
         string FirstName  //get and set the first name of this member

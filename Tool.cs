@@ -6,21 +6,44 @@ namespace Assignment
 {
     class Tool : iTool
     {
-        public string Name { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public int Quantity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public int AvailableQuantity { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public int NoBorrowings { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string Name { get; set; }
+        public int Quantity { get;  set; }
+        public int AvailableQuantity { get;  set; }
+        public int NoBorrowings
+        {
+            get
+            {
+                return borrowers.Number;
+            }
+            set
+            {
+                throw new NotImplementedException("Setter for NoBorrowings is not supported!");
+            }
+        }
 
-        public iMemberCollection GetBorrowers => throw new NotImplementedException();
+        public iMemberCollection GetBorrowers
+        {
+            get
+            {
+                return borrowers;
+            }
+        }
+        private iMemberCollection borrowers;
+        public Tool(string name, int quantity)
+        {
+            Name = name;
+            Quantity = quantity;
+            borrowers = new MemberCollection();
+        }
 
         public void addBorrower(iMember aMember)
         {
-            throw new NotImplementedException();
+            borrowers.add(aMember);
         }
 
         public void deleteBorrower(iMember aMember)
         {
-            throw new NotImplementedException();
+            borrowers.delete(aMember);
         }
     }
 }

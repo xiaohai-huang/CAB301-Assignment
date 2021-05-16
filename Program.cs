@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.Json;
 
 namespace Assignment
 {
@@ -6,7 +7,12 @@ namespace Assignment
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            string data = " [ {\"name\": \"John Doe\", \"occupation\": \"gardener\"}, " +
+    "{\"name\": \"Peter Novak\", \"occupation\": \"driver\"} ]";
+
+            using JsonDocument doc = JsonDocument.Parse(data);
+            JsonElement root = doc.RootElement;
+            Console.WriteLine(root[0].GetProperty("name"));
         }
     }
 }
