@@ -8,6 +8,10 @@ namespace Assignment
     {
         public int Number => members.Size;
         private BinaryTree<iMember> members;
+        public MemberCollection()
+        {
+            members = new BinaryTree<iMember>();
+        }
         public void add(iMember aMember)
         {
             members.Add(aMember);

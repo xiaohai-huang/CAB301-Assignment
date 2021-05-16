@@ -28,6 +28,10 @@ namespace Assignment
             root = new Node<E>(initialItem);
             Size = 1;
         }
+        public BinaryTree()
+        {
+            Size = 0;
+        }
         public BinaryTree(Node<E> root)
         {
             this.root = root;
