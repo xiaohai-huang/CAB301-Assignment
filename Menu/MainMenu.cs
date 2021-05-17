@@ -4,18 +4,15 @@ using System.Text;
 
 namespace Assignment
 {
-    class MainMenu
+    class MainMenu:Menu
     {
-        private Menu menu;
-        public MainMenu()
-        {
-            menu = new Menu("Main Menu", Menu.MAIN_MENU_OPTIONS);
-        }
+        public MainMenu():base("Main Menu", Menu.MAIN_MENU_OPTIONS) {}
 
-        public void Display()
+        public override void Display()
         {
-            menu.Display();
-            switch (menu.UserOption)
+            Console.WriteLine(greeting);
+            base.Display();
+            switch (UserOption)
             {
                 case 1:
                     HandleStaffLogin();
@@ -30,15 +27,19 @@ namespace Assignment
             }
         }
 
-        private const string USER_NAME = "staff";
-        private const string PASSWORD = "today123";
+        // TODO: change password to "today123"
+        //private const string USER_NAME = "staff";
+        //private const string PASSWORD = "today123";
+        private const string USER_NAME = "s";
+        private const string PASSWORD = "123";
         private void HandleStaffLogin()
         {
             string username=null;
             string passowrd=null;
             bool valid = username == USER_NAME && passowrd == PASSWORD;
-            
-            Console.WriteLine("Staff Login\n\n");
+
+            Console.Clear();
+            Console.WriteLine("Staff Login\n");
 
 
             while (!valid)
@@ -60,7 +61,7 @@ namespace Assignment
 
         private void HandleMemebrLogin()
         {
-
+            
         }
     }
 }

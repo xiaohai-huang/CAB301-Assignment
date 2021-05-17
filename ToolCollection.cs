@@ -32,7 +32,10 @@ namespace Assignment
                 tools[index] = aTool;
                 number++;
             }
-            throw new IndexOutOfRangeException("Failed to insert a new tool. The collection is full.");
+            else
+            {
+                throw new IndexOutOfRangeException("Failed to insert a new tool. The collection is full.");
+            }
         }
 
         public void delete(iTool aTool)

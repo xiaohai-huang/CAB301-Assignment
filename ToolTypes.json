@@ -1,0 +1,41 @@
+﻿[
+  {
+    "Gardening Tools": [
+      "Line Trimmers",
+      "Lawn Mowers",
+      "Hand Tools",
+      "Wheelbarrows",
+      "Garden Power Tools"
+    ]
+  },
+  {
+    "Flooring Tools": []
+  },
+  {
+    "Fencing Tools": []
+  },
+  {
+    "Measuring Tools": []
+  },
+  {
+    "Cleaning Tools": []
+  },
+  {
+    "Painting Tools": [
+      "Sanding Tools",
+      "Brushes",
+      "Rollers",
+      "Paint Removal Tools",
+      "Paint Scrapers"
+    ]
+  },
+  {
+    "Electronic Tools": []
+  },
+  {
+    "Electricity Tools": []
+  },
+  {
+    "Automotive Tools": []
+  }
+]

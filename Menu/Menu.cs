@@ -6,6 +6,7 @@ namespace Assignment
 {
     class Menu
     {
+
         public string Title
         {
             get; private set;
@@ -23,6 +24,15 @@ namespace Assignment
             private set;
         }
 
+        protected iToolLibrarySystem toolLibrarySystem;
+
+        protected string LINE;
+
+        protected string greeting = "Welcome to the Tool Library";
+
+        private bool back;
+
+
         public static readonly string[] MAIN_MENU_OPTIONS = new string[] { "Staff Login", "Member Login", "Exit" };
         public static readonly string[] STAFF_MENU_OPTIONS = new string[]
         {
@@ -34,8 +44,8 @@ namespace Assignment
             "Return to main menu"
         };
 
-        public static readonly string[] MEMBER_MENU_OPTIONS = new string[] 
-        { 
+        public static readonly string[] MEMBER_MENU_OPTIONS = new string[]
+        {
             "Display all the tools of a tool type",
             "Borrow a tool",
             "Return a tool",
@@ -44,27 +54,31 @@ namespace Assignment
             "Return to main menu"
         };
 
-        public Menu(string title, string[] options)
+        protected static iMemberCollection memberData = new MemberCollection();
+        public Menu(string title, string[] options, bool back=true)
         {
             Title = title;
             Options = options;
+            this.back = back;
+            LINE = Line(10);
+            toolLibrarySystem = new ToolLibrarySystem(memberData);
         }
         /// <summary>
-        /// Display the menu
+        /// Display the menu.
         /// </summary>
         public virtual void Display()
         {
-            string LINE = new string('=', 10);
             string top = $"{LINE}{Title}{LINE}";
-            string bottom = $"{LINE}{new string('=', Title.Length)}{LINE}";
-            string query = $"Please make a selection (1-{Options.Length - 1}, or 0 to return to main menu): ";
+            string bottom = $"{LINE}{Line(Title.Length)}{LINE}";
+            string query = $"Please make a selection (1-{Options.Length - 1}, or 0): ";
+            if(!back) query = $"Please make a selection (1-{Options.Length}): ";
             int optionNumber = 1;
 
             Console.WriteLine(top);
             Array.ForEach(Options, (option) =>
             {
                 // the last option is exit or go back
-                if (optionNumber == Options.Length)
+                if (optionNumber == Options.Length && back)
                 {
                     Console.WriteLine($"0. {option}");
                 }
@@ -77,19 +91,38 @@ namespace Assignment
             });
             Console.WriteLine(bottom);
             Console.WriteLine();
-
-            GetUserInput(query);
+            if (Options.Length == 0)
+            {
+                Console.WriteLine("Empty");
+                UserOption = -1;
+            }
+            else
+            {
+                GetUserInput(query);
+            }
+            Console.WriteLine();
+            
         }
 
         private void GetUserInput(string query)
         {
+            int lowerBound = back ? 0 : 1;
+            int upperBound = back ? Options.Length - 1 : Options.Length;
+            UserOption = GetUserOption(query, lowerBound, upperBound);
+        }
+
+        public static int GetUserOption(string query, int start, int end)
+        {
             bool valid = false;
+            int lowerBound = start;
+            int upperBound = end;
+            int option = -1 ;
             while (!valid)
             {
 
                 Console.Write(query);
                 string userInput = Console.ReadLine();
-                int option;
+                
                 try
                 {
                     option = int.Parse(userInput);
@@ -101,22 +134,40 @@ namespace Assignment
                     continue;
                 }
 
-                if (0 <= option && option < Options.Length)
+                if (lowerBound <= option && option <= upperBound)
                 {
                     valid = true;
-                    UserOption = option;
                 }
                 else
                 {
                     valid = false;
-                    Console.WriteLine($"Input must be within range (1-{Options.Length - 1}, or 0)\n");
+                    Console.WriteLine($"Input must be within range ({lowerBound}-{upperBound})\n");
                 }
 
             }
-
-            Console.Clear();
+            
+            return option;
+        }
+      
+        public static string GetStringInput(string query)
+        {
+            Console.Write(query);
+            return Console.ReadLine();
         }
 
+        public static string Line(int length)
+        {
+            return new string('=', length);
+        }
 
+        /// <summary>
+        /// A line (=====) which has the same length of the input string.
+        /// </summary>
+        /// <param name="str">The input string.</param>
+        /// <returns>A line.</returns>
+        protected string Line(string str)
+        {
+            return Line(str.Length);
+        }
     }
 }

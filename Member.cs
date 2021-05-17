@@ -28,7 +28,13 @@ namespace Assignment
             Tools = new string[MAX_TOOLS];
             numTools = 0;
         }
-
+        public Member(string firstName, string lastName)
+        {
+            FirstName = firstName;
+            LastName = lastName;
+            Tools = new string[MAX_TOOLS];
+            numTools = 0;
+        }
         public void addTool(iTool aTool)
         {
             if (numTools < 3)
@@ -67,6 +73,10 @@ namespace Assignment
         public int CompareTo(iMember other)
         {
             return string.Compare(GetFullName(this), GetFullName(other));
+        }
+        public override string ToString()
+        {
+            return GetFullName(this);
         }
     }
 }
