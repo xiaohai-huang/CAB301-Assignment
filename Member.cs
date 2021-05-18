@@ -61,7 +61,10 @@ namespace Assignment
                 Tools[index] = aTool.Name;
                 numTools++;
             }
-            throw new IndexOutOfRangeException("A memebr cannot borrow more than three tools at the same time.");
+            else
+            {
+                throw new IndexOutOfRangeException("A memebr cannot borrow more than three tools at the same time.");
+            }
         }
 
         public void deleteTool(iTool aTool)
