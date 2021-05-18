@@ -9,33 +9,78 @@
     ]
   },
   {
-    "Flooring Tools": []
-  },
-  {
-    "Fencing Tools": []
-  },
-  {
-    "Measuring Tools": []
-  },
-  {
-    "Cleaning Tools": []
-  },
-  {
-    "Painting Tools": [
-      "Sanding Tools",
-      "Brushes",
-      "Rollers",
-      "Paint Removal Tools",
-      "Paint Scrapers"
+    "Flooring Tools": [
+      "Scrapers",
+      "Floor Lasers",
+      "Floor Levelling Tools",
+      "Floor Levelling Materials",
+      "Floor Hand Tools",
+      "Tiling Tools"
     ]
   },
   {
-    "Electronic Tools": []
+    "Fencing Tools": [
+      "Hand Tools",
+      "Electric Fencing",
+      "Steel Fencing Tools",
+      "Power Tools",
+      "Fencing Accessories"
+    ]
   },
   {
-    "Electricity Tools": []
+    "Measuring Tools": [
+      "Distance Tools",
+      "Laser Measurer",
+      "Measuring Jugs",
+      "Temperature & Humidity Tools",
+      "Levelling Tools",
+      "Markers"
+    ]
   },
   {
-    "Automotive Tools": []
+    "Cleaning Tools": [
+      "Draining",
+      "Car Cleaning",
+      "Vacuum",
+      "Pressure Cleaners",
+      "Pool Cleaning",
+      "Floor Cleaning"
+    ]
+  },
+  {
+    "Painting Tools": [
+      "Car Cleaning",
+      "Vacuum",
+      "Pressure Cleaners",
+      "Pool Cleaning",
+      "Floor Cleaning"
+    ]
+  },
+  {
+    "Electronic Tools": [
+      "Voltage Tester",
+      "Oscilloscopes",
+      "Thermal Imaging",
+      "Data Test Tool",
+      "Insulation Testers"
+    ]
+  },
+  {
+    "Electricity Tools": [
+      "Test Equipment",
+      "Safety Equipment",
+      "Basic Hand tools",
+      "Circuit Protection",
+      "Cable Tools"
+    ]
+  },
+  {
+    "Automotive Tools": [
+      "Test Equipment",
+      "Safety Equipment",
+      "Basic Hand tools",
+      "Circuit Protection",
+      "Cable Tools"
+    ]
   }
 ]
