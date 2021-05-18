@@ -86,7 +86,7 @@ namespace Assignment
             {
                 if (attempts >= MAX_ATTEMPTS) break;
                 attempts++;
-                Console.Write("username: ");
+                Console.Write("username (FirstNameLastName): ");
                 string username = Console.ReadLine();
 
                 Console.Write("password: ");

@@ -53,7 +53,6 @@ namespace Assignment
             iToolCollection tools = toolData[state.ToolCategory][state.ToolType];
             iTool tool = Array.Find(tools.toArray(), tool => tool.Name == aTool.Name);
             tool.Quantity -= quantity;
-         
         }
 
         public void delete(iMember aMember)

@@ -14,7 +14,7 @@ namespace Assignment
             get { return firstName; }
             set
             {
-                firstName = Captalize(value);
+                firstName = CaptalizeFirst(value);
             }
         }
         public string LastName
@@ -22,7 +22,7 @@ namespace Assignment
             get { return lastName; }
             set
             {
-                lastName = Captalize(value);
+                lastName = CaptalizeFirst(value);
             }
         }
         public string ContactNumber { get; set; }
@@ -86,9 +86,14 @@ namespace Assignment
         {
             return $"{member.FirstName} {member.LastName}";
         }
-        private static string Captalize(string str)
+        /// <summary>
+        /// Captalize the first letter and make the rest of the letters lower case.
+        /// </summary>
+        /// <param name="str">The string to be converted</param>
+        /// <returns>A captalized string</returns>
+        private static string CaptalizeFirst(string str)
         {
-            return char.ToUpper(str[0]) + str.Substring(1);
+            return char.ToUpper(str[0]) + str.Substring(1).ToLower();
         }
 
         public int CompareTo(iMember other)

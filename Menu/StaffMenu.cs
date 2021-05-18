@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Assignment
 {
@@ -211,13 +212,14 @@ namespace Assignment
         }
         private void HandleMemeberRegister()
         {
+            const int NUM_DIGITS = 4;
             string title = "Register New Member with Library";
             Console.WriteLine(title + "\n");
             Console.WriteLine(Line(title) + "\n");
             string firstName = GetStringInput("Enter the first name of the new user - ");
             string lastName = GetStringInput("Enter the last name of the new user - ");
             string phoneNumber = GetNumberInput("Enter the mobile number of the new user - ").ToString();
-            string PIN = GetStringInput("Enter PIN - ");
+            string PIN = GetPIN("Enter PIN - ", NUM_DIGITS); //  4 digits PIN
             // add to the database
             iMember member = new Member(firstName, lastName, phoneNumber, PIN);
             try
@@ -290,6 +292,24 @@ namespace Assignment
         private void GoBack()
         {
             Display();
+        }
+   
+        private static string GetPIN(string query, int numDigits)
+        {
+            Regex rx = new Regex(@"[0-9]"+"{"+numDigits+"}", RegexOptions.Compiled);
+            bool valid = false;
+            string pin = null;
+            while(!valid)
+            {
+                Console.Write(query);
+                pin = Console.ReadLine();
+                valid = rx.IsMatch(pin);
+                if(!valid)
+                {
+                    Console.WriteLine($"PIN must be a {numDigits}-digit integer.\n");
+                }
+            }
+            return pin;
         }
     }
 }
