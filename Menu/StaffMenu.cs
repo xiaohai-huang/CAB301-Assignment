@@ -190,7 +190,7 @@ namespace Assignment
             Console.WriteLine(Line(title) + "\n");
             string firstName = GetStringInput("Enter the first name of the new user - ");
             string lastName = GetStringInput("Enter the last name of the new user - ");
-            string phoneNumber = GetStringInput("Enter the mobile number of the new user - ");
+            string phoneNumber = GetNumberInput("Enter the mobile number of the new user - ").ToString();
             string PIN = GetStringInput("Enter PIN - ");
             string result = $"Added {firstName} {lastName} successfully as a new memebr\n";
             // add to the database

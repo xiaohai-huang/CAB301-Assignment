@@ -182,6 +182,27 @@ namespace Assignment
             return Console.ReadLine();
         }
 
+        public static long GetNumberInput(string query)
+        {
+            bool valid = false;
+            long userInput = -1;
+            while(!valid)
+            {
+                try
+                {
+                    userInput = long.Parse(GetStringInput(query));
+                    valid = true;
+                }
+                catch (FormatException)
+                {
+                    Console.WriteLine("Phone Number must be a number\n");
+                    valid = false;
+                }
+            }
+
+            return userInput;
+        }
+
         public static string Line(int length)
         {
             return new string('=', length);
