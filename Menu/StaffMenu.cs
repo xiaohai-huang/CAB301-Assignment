@@ -27,13 +27,21 @@ namespace Assignment
                 case 4:
                     HandleMemeberRegister();
                     break;
-
+                case 5:
+                    HandleMemeberRemove();
+                    break;
+                case 6:
+                    HandleFindContactNumber();
+                    break;
 
                 case 0:
                     new MainMenu().Display();
                     break;
             }
         }
+
+        
+
         private void HandleAddNewTool()
         {
             string[] categories = Data.GetCategories();
@@ -200,6 +208,34 @@ namespace Assignment
             Console.ReadLine();
             // go back to staff menu
             GoBack();
+        }
+        private void HandleMemeberRemove()
+        {
+            string title = "Remove a Member from Library";
+            Console.WriteLine(title + "\n");
+            Console.WriteLine(Line(title) + "\n");
+            string firstName = GetStringInput("Enter the first name of the user - ");
+            string lastName = GetStringInput("Enter the last name of the user - ");
+            
+            string result = $"Successfully removed the member {firstName} {lastName} from library!\n";
+            // add to the database
+            iMember member = new Member(firstName, lastName);
+            try
+            {
+                toolLibrarySystem.delete(member);
+                Console.WriteLine(result);
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            Console.ReadLine();
+            // go back to staff menu
+            GoBack();
+        }
+        private void HandleFindContactNumber()
+        {
+            throw new NotImplementedException();
         }
         /// <summary>
         /// Go back to the menu.

@@ -19,6 +19,7 @@ namespace Assignment
         private const int MAX_TOOLS = 3;
         private int numTools;
 
+        public Member() { }
         public Member(string firstName, string lastName, string contactNumber, string pin)
         {
             FirstName = firstName;

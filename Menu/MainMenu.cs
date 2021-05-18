@@ -28,6 +28,7 @@ namespace Assignment
         }
 
         // TODO: change password to "today123"
+        private const int MAX_ATTEMPTS = 3;
         //private const string USER_NAME = "staff";
         //private const string PASSWORD = "today123";
         private const string USER_NAME = "s";
@@ -39,9 +40,11 @@ namespace Assignment
             Console.Clear();
             Console.WriteLine("Staff Login\n");
 
-
+            int attempts = 0;
             while (!valid)
             {
+                if (attempts >= MAX_ATTEMPTS) break;
+                attempts++;
                 Console.Write("username: ");
                 string username = Console.ReadLine();
 
@@ -53,27 +56,38 @@ namespace Assignment
                     Console.WriteLine("Username or password is incorrect!\n");
                 }
             }
-            Console.Clear();
-            new StaffMenu().Display();
+            // login failed too many times
+            if (attempts >= MAX_ATTEMPTS && !valid)
+            {
+                Console.WriteLine("You have tried too many times!");
+                Console.ReadLine();
+                Console.Clear();
+                Display();
+            }
+            else
+            {
+                Console.Clear();
+                new StaffMenu().Display();
+            }
         }
 
         private void HandleMemebrLogin()
         {
-            string username = null;
-            string passowrd = null;
             bool valid = false;
 
             Console.Clear();
             Console.WriteLine("Member Login\n");
 
-
+            int attempts = 0;
             while (!valid)
             {
+                if (attempts >= MAX_ATTEMPTS) break;
+                attempts++;
                 Console.Write("username: ");
-                username = Console.ReadLine();// SmithJoe
+                string username = Console.ReadLine();
 
                 Console.Write("password: ");
-                passowrd = Console.ReadLine();
+                string passowrd = Console.ReadLine();
                 // retrieve the user from database
                 try
                 {
@@ -95,8 +109,19 @@ namespace Assignment
                     Console.WriteLine("Username or password is incorrect!\n");
                 }
             }
-            Console.Clear();
-            new MemberMenu().Display();
+            // login failed too many times
+            if (attempts >= MAX_ATTEMPTS && !valid)
+            {
+                Console.WriteLine("You have tried too many times!");
+                Console.ReadLine();
+                Console.Clear();
+                Display();
+            }
+            else
+            { 
+                Console.Clear();
+                new MemberMenu().Display();
+            }
         }
 
         /// <summary>

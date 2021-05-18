@@ -176,7 +176,6 @@ namespace Assignment
             iMember member = new Member(firstName, lastName, phoneNumber, PIN);
             try
             {
-                toolLibrarySystem.add(member);
                 Console.WriteLine(result);
 
             }

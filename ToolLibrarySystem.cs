@@ -57,7 +57,9 @@ namespace Assignment
 
         public void delete(iMember aMember)
         {
-            throw new NotImplementedException();
+            bool exist = memebrData.search(aMember);
+            if (!exist) throw new ArgumentException($"The member does not exist!");
+            memebrData.delete(aMember);
         }
 
         public void displayBorrowingTools(iMember aMember)
@@ -70,24 +72,25 @@ namespace Assignment
             iTool[] tools = toolData[state.ToolCategory][aToolType].toArray();
             int num = 1;
             string title = "Tool Type List of Tools";
-            string heading = $"{"ToolName",-30} {"Available",10} {"Total",10}";
+            string heading = $"{"ToolName",-50} {"Available",10} {"Total",10}";
 
             // UI
             Console.WriteLine(title);
-            Console.WriteLine(Menu.Line(70));
+            Console.WriteLine(Menu.Line(80));
             Console.WriteLine(heading);
-            Console.WriteLine(Menu.Line(70));
+            Console.WriteLine(Menu.Line(80));
 
             // display tools
             Array.ForEach(tools, tool =>
             {
                 string toolName = $"{num}. {tool.Name}";
-                string line = $"{toolName,-30} {tool.AvailableQuantity,10} {tool.Quantity,10}";
+                string line = $"{toolName,-50} {tool.AvailableQuantity,10} {tool.Quantity,10}";
                 Console.WriteLine(line);
                 num++;
             });
+            Console.WriteLine(Menu.Line(80));
 
-            
+
         }
 
         public void displayTopTHree()

@@ -1,10 +1,12 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Assignment
 {
+    /// <summary>
+    /// For fetching pre-exist data
+    /// </summary>
     static class Data
     {
         private static string jsonText;
@@ -14,7 +16,7 @@ namespace Assignment
         /// <returns>An array of categories</returns>
         public static string[] GetCategories()
         {
-            ReadText();
+            ReadToolText();
             JsonDocument json = JsonDocument.Parse(jsonText);
             JsonElement root = json.RootElement;
             int length = root.GetArrayLength();
@@ -64,7 +66,7 @@ namespace Assignment
         /// <summary>
         /// Loads ToolTypes.json file
         /// </summary>
-        private static void ReadText()
+        private static void ReadToolText()
         {
             if(jsonText==null)
             {
@@ -72,6 +74,39 @@ namespace Assignment
             }
         }
     
+        /// <summary>
+        /// Get a default member
+        /// </summary>
+        /// <returns>A memeber</returns>
+        public static iMember GetMember()
+        {
+            string memberText = File.ReadAllText("UserData.json");
+
+            return JsonSerializer.Deserialize<Member>(memberText);
+        }
     
+        public static void PopulateTools(Dictionary<string, Dictionary<string, iToolCollection>> toolData)
+        {
+            // ["Gardening Tools"]["Line Trimmers"]
+            toolData["Gardening Tools"]["Line Trimmers"].add(new Tool("Ozito 290mm Electric Line Trimmer", 4));
+
+            toolData["Gardening Tools"]["Line Trimmers"].add(new Tool("Ryobi 1200W Line Trimmer", 1));
+
+            toolData["Gardening Tools"]["Line Trimmers"].add(new Tool("Ryobi Easy Stat Curved Shaft Line Trimmer", 2));
+
+            toolData["Gardening Tools"]["Line Trimmers"].add(new Tool("Ozito 550W Electric Hedge Trimmer", 6));
+
+            toolData["Gardening Tools"]["Line Trimmers"].add(new Tool("Ozito Lithium-Ion Cordless Hedge Trimmer", 2));
+
+            toolData["Gardening Tools"]["Line Trimmers"].add(new Tool("Ryobi 18V Telescropic Hedge Trimmer", 3));
+
+            toolData["Gardening Tools"]["Line Trimmers"].add(new Tool("Ozito 500W Electric Pole Hedge Trimmer", 5));
+        }
+
+        public static void PopulateMemebrs(iMemberCollection memberData)
+        {
+            iMember member = GetMember();// Baorong Huang, PIN 666
+            memberData.add(member);
+        }
     }
 }

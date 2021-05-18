@@ -9,7 +9,7 @@
     <None Update="ToolTypes.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="state.json">
+    <None Update="UserData.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

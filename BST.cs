@@ -44,7 +44,10 @@ namespace Assignment
             {
                 root = new Node<E>(item);
             }
-            Add(item, root);
+            else
+            {
+                Add(item, root);
+            }
             Size++;
         }
         private void Add(E item, Node<E> node)

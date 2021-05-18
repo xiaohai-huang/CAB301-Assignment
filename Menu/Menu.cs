@@ -6,7 +6,6 @@ namespace Assignment
 {
     class Menu
     {
-
         public string Title
         {
             get; private set;
@@ -40,6 +39,7 @@ namespace Assignment
             "Add new pieces of an existing tool",
             "Remove some pieces of a tool",
             "Register a new member",
+            "Remove a memeber",
             "Find the contact number of a member",
             "Return to main menu"
         };
@@ -63,19 +63,24 @@ namespace Assignment
 
             memberData = new MemberCollection();
 
-            // populate categories and tool types
+            // populate (9) categories and tool types
             toolData = new Dictionary<string, Dictionary<string, iToolCollection>>();
             string[] categories = Data.GetCategories();
             Array.ForEach(categories, category =>
             {
                 toolData.Add(category, new Dictionary<string, iToolCollection>());
-                    // add tool types to the category
-                    string[] toolTypes = Data.GetToolTypesByCategory(category);
+                // add tool types to the category
+                string[] toolTypes = Data.GetToolTypesByCategory(category);
+
                 Array.ForEach(toolTypes, toolType =>
                 {
                     toolData[category].Add(toolType, new ToolCollection());
                 });
             });
+
+            // populate data
+            Data.PopulateTools(toolData);
+            Data.PopulateMemebrs(memberData);
         }
         public Menu(string title, string[] options, bool back = true)
         {
