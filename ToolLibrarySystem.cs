@@ -19,6 +19,10 @@ namespace Assignment
 
         public void add(iTool aTool)
         {
+            iToolCollection tools = toolData[state.ToolCategory][state.ToolType];
+            bool exist = tools.search(aTool);
+            if (exist) throw new ArgumentException("Warning: Failed to add a new tool. Because this tool already exists in the library!");
+
             toolData[state.ToolCategory][state.ToolType].add(aTool);
         }
 

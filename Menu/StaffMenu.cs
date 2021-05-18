@@ -76,18 +76,27 @@ namespace Assignment
                 state.ToolCategory = category;
                 state.ToolType = toolType;
 
-                // Add a new tool to the tool type
-                iTool tool = new Tool(toolName, 0);
-                toolLibrarySystem.add(tool);
+                try
+                {
+                    // Add a new tool to the tool type
+                    iTool tool = new Tool(toolName, 0);
+                    toolLibrarySystem.add(tool);
 
-                // Display all the tools in the selected tool type again
-                toolLibrarySystem.displayTools(toolType);
+                    // Display all the tools in the selected tool type again
+                    toolLibrarySystem.displayTools(toolType);
+                    Console.WriteLine($"Successfully added a new tool with name - {toolName} to library!");
+                }
+                catch(ArgumentException e)
+                {
+                    // Display all the tools in the selected tool type again
+                    toolLibrarySystem.displayTools(toolType);
+                    Console.WriteLine(e.Message);
+                }
             }
             else
             {
                 Console.WriteLine("Unable to add this tool to library. No tool type is selected!");
             }
-            Console.WriteLine($"Successfully added a new tool with name - {toolName} to library!");
             Console.ReadLine();
             // go back to staff menu
             GoBack();

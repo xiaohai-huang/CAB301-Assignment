@@ -51,7 +51,7 @@ namespace Assignment
 
         public bool search(iTool aTool)
         {
-            return Array.FindIndex(tools, tool => tool.Name == aTool.Name) != -1;
+            return Array.FindIndex(tools, tool =>  tool?.Name == aTool.Name) != -1;
         }
 
         public iTool[] toArray()
