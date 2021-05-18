@@ -38,7 +38,7 @@ namespace Assignment
             }
         }
 
- 
+
 
         private void HandleDisplayToolsByType()
         {
@@ -48,11 +48,14 @@ namespace Assignment
             Console.WriteLine(title + "\n");
             Console.WriteLine(Line(title));
 
+            // Display all the nine (9) tool categories
             Menu categoryMenu = new Menu("Select the category", categories, false);
             categoryMenu.Display();
+
+            // Select a category
             string category = categories[categoryMenu.UserOption - 1];
 
-
+            // Display all the tool types of the selected category
             string[] toolTypes = Data.GetToolTypesByCategory(category);
             Console.WriteLine($"Tool Types under {category} category");
             Menu toolTypesMenu = new Menu("Select the tool type", toolTypes, false);
@@ -62,13 +65,14 @@ namespace Assignment
             // a category might not have any tool types
             if (toolTypesMenu.UserOption != -1)
             {
+                // Select a tool type
                 string toolType = toolTypes[toolTypesMenu.UserOption - 1];
                 // save user input to state
                 state.ToolCategory = category;
                 state.ToolType = toolType;
 
+                // Display the information about all the tools of the selected tool type
                 toolLibrarySystem.displayTools(toolType);
-
             }
             else
             {
@@ -82,14 +86,17 @@ namespace Assignment
 
         private void HandleBorrowTool()
         {
-            string title = "Update Existing Tool Stock Level";
+            string title = "Borrow Tool from Tool Library";
             Console.WriteLine(title + "\n");
             Console.WriteLine(Line(title) + "\n");
 
+            // Display all the tool categories
             string[] categories = Data.GetCategories();
             Menu categoryMenu = new Menu("Select a tool category", categories, false);
             categoryMenu.Display();
+            // Select a category
             string category = categories[categoryMenu.UserOption - 1];
+            // Display all the tool types of the selected category
             string[] toolTypes = Data.GetToolTypesByCategory(category);
             Console.WriteLine($"Tool Types under {category} category");
             Menu toolTypesMenu = new Menu("Select a tool type", toolTypes, false);
@@ -100,21 +107,40 @@ namespace Assignment
             // a category might not have any tool types
             if (toolTypesMenu.UserOption != -1)
             {
+                // Select a tool type
                 string toolType = toolTypes[toolTypesMenu.UserOption - 1];
                 // save user input to state
                 state.ToolCategory = category;
                 state.ToolType = toolType;
+                iTool[] tools = toolData[state.ToolCategory][state.ToolType].toArray();
+                if (tools.Length == 0)
+                {
+                    Console.WriteLine($"There is no tool under {toolType} tool type.");
+                }
+                else
+                {
+                    // Display all the tools of the selected tool type
+                    toolLibrarySystem.displayTools(toolType);
+                    // Select a tool from the tool list
+                    int toolNumber = GetUserOption("Select a tool from the table - ", 1, tools.Length);
 
-                toolLibrarySystem.displayTools(toolType);
-
-                int quantity = GetUserOption("Enter the quantity to add into the library - ", 1, int.MaxValue);
-                Console.WriteLine();
-                toolLibrarySystem.add(null, quantity);
-                Console.WriteLine($"Updated the quantity of the tool in the library to {quantity}");
+                    Console.WriteLine();
+                    // borrow the tool
+                    iTool tool = tools[toolNumber - 1];
+                    try
+                    {
+                        toolLibrarySystem.borrowTool(state.User, tool);
+                        Console.WriteLine($"{state.User} borrowed {tool.Name} from the library.");
+                    }
+                    catch (IndexOutOfRangeException e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                }
             }
             else
             {
-                Console.WriteLine("There is no tool under this category!");
+                Console.WriteLine("There is no tool type under this category!");
             }
             Console.ReadLine();
             // go back to staff menu
@@ -123,14 +149,17 @@ namespace Assignment
 
         private void HandleReturnTool()
         {
-            string title = "Delete Existing Tool from Library";
+            string title = "Return Tool to Tool Library";
             Console.WriteLine(title + "\n");
             Console.WriteLine(Line(title) + "\n");
 
+            // Display all the tool categories
             string[] categories = Data.GetCategories();
             Menu categoryMenu = new Menu("Select a tool category", categories, false);
             categoryMenu.Display();
+            // Select a category
             string category = categories[categoryMenu.UserOption - 1];
+            // Display all the tool types of the selected category
             string[] toolTypes = Data.GetToolTypesByCategory(category);
             Console.WriteLine($"Tool Types under {category} category");
             Menu toolTypesMenu = new Menu("Select a tool type", toolTypes, false);
@@ -141,21 +170,40 @@ namespace Assignment
             // a category might not have any tool types
             if (toolTypesMenu.UserOption != -1)
             {
+                // Select a tool type
                 string toolType = toolTypes[toolTypesMenu.UserOption - 1];
                 // save user input to state
                 state.ToolCategory = category;
                 state.ToolType = toolType;
+                iTool[] tools = toolData[state.ToolCategory][state.ToolType].toArray();
+                if (tools.Length == 0)
+                {
+                    Console.WriteLine($"There is no tool under {toolType} tool type.");
+                }
+                else
+                {
+                    // Display all the tools of the selected tool type
+                    toolLibrarySystem.displayTools(toolType);
+                    // Select a tool from the tool list
+                    int toolNumber = GetUserOption("Select a tool from the table - ", 1, tools.Length);
 
-                toolLibrarySystem.displayTools(toolType);
-
-                int quantity = GetUserOption("Enter the quantity to remove from the library - ", 1, int.MaxValue);
-                Console.WriteLine();
-                toolLibrarySystem.delete(null, quantity);
-
+                    Console.WriteLine();
+                    // borrow the tool
+                    iTool tool = tools[toolNumber - 1];
+                    try
+                    {
+                        toolLibrarySystem.borrowTool(state.User, tool);
+                        Console.WriteLine($"{state.User} borrowed {tool.Name} from the library.");
+                    }
+                    catch (IndexOutOfRangeException e)
+                    {
+                        Console.WriteLine(e.Message);
+                    }
+                }
             }
             else
             {
-                Console.WriteLine("There is no tool under this category!");
+                Console.WriteLine("There is no tool type under this category!");
             }
             Console.ReadLine();
             // go back to staff menu
@@ -164,25 +212,12 @@ namespace Assignment
 
         private void HandleListToolsHolding()
         {
-            string title = "Register New Member with Library";
+            string title = $"Tools on loan to {state.User}";
             Console.WriteLine(title + "\n");
             Console.WriteLine(Line(title) + "\n");
-            string firstName = GetStringInput("Enter the first name of the new user - ");
-            string lastName = GetStringInput("Enter the last name of the new user - ");
-            string phoneNumber = GetStringInput("Enter the mobile number of the new user - ");
-            string PIN = GetStringInput("Enter PIN - ");
-            string result = $"Added {firstName} {lastName} successfully as a new memebr\n";
-            // add to the database
-            iMember member = new Member(firstName, lastName, phoneNumber, PIN);
-            try
-            {
-                Console.WriteLine(result);
 
-            }
-            catch (ArgumentException e)
-            {
-                Console.WriteLine(e.Message);
-            }
+
+            Console.WriteLine("Press enter to continue");
             Console.ReadLine();
             // go back to staff menu
             GoBack();

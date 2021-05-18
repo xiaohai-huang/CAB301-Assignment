@@ -35,6 +35,8 @@ namespace Assignment
         private const string PASSWORD = "123";
         private void HandleStaffLogin()
         {
+            string username;
+            string passowrd;
             bool valid = false;
 
             Console.Clear();
@@ -46,10 +48,10 @@ namespace Assignment
                 if (attempts >= MAX_ATTEMPTS) break;
                 attempts++;
                 Console.Write("username: ");
-                string username = Console.ReadLine();
+                username = Console.ReadLine();
 
                 Console.Write("password: ");
-                string passowrd = Console.ReadLine();
+                passowrd = Console.ReadLine();
                 valid = username == USER_NAME && passowrd == PASSWORD;
                 if (!(username == null && passowrd == null) && !valid)
                 {
@@ -73,6 +75,7 @@ namespace Assignment
 
         private void HandleMemebrLogin()
         {
+            iMember member = null;
             bool valid = false;
 
             Console.Clear();
@@ -94,7 +97,7 @@ namespace Assignment
 
                     string[] names = SplitName(username);
 
-                    iMember member = new Member(names[0], names[1]);
+                    member = new Member(names[0], names[1]);
                     bool exist = memberData.search(member);
 
 
@@ -118,7 +121,9 @@ namespace Assignment
                 Display();
             }
             else
-            { 
+            {
+                // save the user info in state
+                state.User = member;
                 Console.Clear();
                 new MemberMenu().Display();
             }

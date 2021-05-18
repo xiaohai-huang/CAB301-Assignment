@@ -54,9 +54,13 @@ namespace Assignment
             string toolName = Console.ReadLine();
             Console.WriteLine();
 
+            // Display all the nine (9) tool categories
             Menu categoryMenu = new Menu("Select the category", categories, false);
             categoryMenu.Display();
+            // Select a category
             string category = categories[categoryMenu.UserOption - 1];
+
+            // Display all the tool types of the selected category
             string[] toolTypes = Data.GetToolTypesByCategory(category);
             Console.WriteLine($"Tool Types under {category} category");
             Menu toolTypesMenu = new Menu("Select the tool type", toolTypes, false);
@@ -65,13 +69,18 @@ namespace Assignment
             // a category might not have any tool types
             if (toolTypesMenu.UserOption != -1)
             {
+                // Select a tool type
                 string toolType = toolTypes[toolTypesMenu.UserOption - 1];
                 // save the state
                 state.ToolCategory = category;
                 state.ToolType = toolType;
 
+                // Add a new tool to the tool type
                 iTool tool = new Tool(toolName, 0);
                 toolLibrarySystem.add(tool);
+
+                // Display all the tools in the selected tool type again
+                toolLibrarySystem.displayTools(toolType);
             }
             else
             {
@@ -88,10 +97,13 @@ namespace Assignment
             Console.WriteLine(title + "\n");
             Console.WriteLine(Line(title) + "\n");
 
+            // Display all the tool categories
             string[] categories = Data.GetCategories();
             Menu categoryMenu = new Menu("Select a tool category", categories, false);
             categoryMenu.Display();
+            // Select a category
             string category = categories[categoryMenu.UserOption - 1];
+            // Display all the tool types of the selected category
             string[] toolTypes = Data.GetToolTypesByCategory(category);
             Console.WriteLine($"Tool Types under {category} category");
             Menu toolTypesMenu = new Menu("Select a tool type", toolTypes, false);
@@ -102,6 +114,7 @@ namespace Assignment
             // a category might not have any tool types
             if (toolTypesMenu.UserOption != -1)
             {
+                // Select a tool type
                 string toolType = toolTypes[toolTypesMenu.UserOption - 1];
                 // save user input to state
                 state.ToolCategory = category;
@@ -113,11 +126,13 @@ namespace Assignment
                 }
                 else
                 {
+                    // Display all the tools of the selected tool type
                     toolLibrarySystem.displayTools(toolType);
-
+                    // Select a tool from the tool list
                     int toolNumber = GetUserOption("Select a tool from the table - ", 1, tools.Length);
                     int quantity = GetUserOption("Enter the quantity to add into the library - ", 1, int.MaxValue);
                     Console.WriteLine();
+                    // Add the quantity of the tool
                     iTool tool = tools[toolNumber - 1];
                     toolLibrarySystem.add(tool, quantity);
                     Console.WriteLine($"Updated the quantity of the tool in the library to {tool.Quantity}");
@@ -136,11 +151,13 @@ namespace Assignment
             string title = "Delete Existing Tool from Library";
             Console.WriteLine(title + "\n");
             Console.WriteLine(Line(title) + "\n");
-
+            // Display all the nine (9) tool categories
             string[] categories = Data.GetCategories();
             Menu categoryMenu = new Menu("Select a tool category", categories, false);
             categoryMenu.Display();
+            // Select a category
             string category = categories[categoryMenu.UserOption - 1];
+            // Display all the tool types of the selected category
             string[] toolTypes = Data.GetToolTypesByCategory(category);
             Console.WriteLine($"Tool Types under {category} category");
             Menu toolTypesMenu = new Menu("Select a tool type", toolTypes, false);
@@ -151,21 +168,30 @@ namespace Assignment
             // a category might not have any tool types
             if (toolTypesMenu.UserOption != -1)
             {
+                // Select a tool type
                 string toolType = toolTypes[toolTypesMenu.UserOption - 1];
                 // save user input to state
                 state.ToolCategory = category;
                 state.ToolType = toolType;
 
                 iTool[] tools = toolData[state.ToolCategory][state.ToolType].toArray();
+                // Display all the tools of the selected tool type
                 toolLibrarySystem.displayTools(toolType);
 
+                // Select a tool from the tool list
                 int toolNumber = GetUserOption("Select a tool from the table - ", 1, tools.Length);
 
+                // Input the number of pieces of the tool to be removed
                 int quantity = GetUserOption("Enter the quantity to remove from the library - ", 1, int.MaxValue);
                 Console.WriteLine();
                 iTool tool = tools[toolNumber - 1];
                 try
                 {
+                    /*
+                        If the number of pieces of the tool is not more than the number of 
+                        pieces that are currently in the library, reduce the total quantity and 
+                        the available quantity of the tool
+                     */
                     toolLibrarySystem.delete(tool, quantity);
                     Console.WriteLine($"Decreased the quantity of the tool in the library to {tool.Quantity}");
                 }
@@ -192,12 +218,13 @@ namespace Assignment
             string lastName = GetStringInput("Enter the last name of the new user - ");
             string phoneNumber = GetNumberInput("Enter the mobile number of the new user - ").ToString();
             string PIN = GetStringInput("Enter PIN - ");
-            string result = $"Added {firstName} {lastName} successfully as a new memebr\n";
             // add to the database
             iMember member = new Member(firstName, lastName, phoneNumber, PIN);
             try
             {
                 toolLibrarySystem.add(member);
+                string result = $"Added {member.FirstName} {member.LastName} successfully as a new memebr\n";
+
                 Console.WriteLine(result);
 
             }
@@ -217,12 +244,13 @@ namespace Assignment
             string firstName = GetStringInput("Enter the first name of the user - ");
             string lastName = GetStringInput("Enter the last name of the user - ");
             
-            string result = $"Successfully removed the member {firstName} {lastName} from library!\n";
+            
             // remove from the database
             iMember member = new Member(firstName, lastName);
             try
             {
                 toolLibrarySystem.delete(member);
+                string result = $"Successfully removed the member {member.FirstName} {member.LastName} from library!\n";
                 Console.WriteLine(result);
             }
             catch (ArgumentException e)
