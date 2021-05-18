@@ -7,8 +7,24 @@ namespace Assignment
 {
     class Member : iMember
     {
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        private string firstName;
+        private string lastName;
+        public string FirstName
+        {
+            get { return firstName; }
+            set
+            {
+                firstName = Captalize(value);
+            }
+        }
+        public string LastName
+        {
+            get { return lastName; }
+            set
+            {
+                lastName = Captalize(value);
+            }
+        }
         public string ContactNumber { get; set; }
         public string PIN { get; set; }
 
@@ -69,6 +85,10 @@ namespace Assignment
         private static string GetFullName(iMember member)
         {
             return $"{member.FirstName} {member.LastName}";
+        }
+        private static string Captalize(string str)
+        {
+            return char.ToUpper(str[0]) + str.Substring(1);
         }
 
         public int CompareTo(iMember other)

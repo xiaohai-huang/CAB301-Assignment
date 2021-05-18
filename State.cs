@@ -12,7 +12,10 @@ namespace Assignment
     /// </summary>
     class State
     {
-        public string UserType { get; set; }
+        /// <summary>
+        /// Current user of the app (only support Member)
+        /// </summary>
+        public iMember User { get; set; }
         public string ToolCategory { get; set; }
         public string ToolType { get; set; }
         public State() { }
@@ -21,9 +24,9 @@ namespace Assignment
             ToolCategory = toolCategory;
             ToolType = toolType;
         }
-        public State(string userType, string toolCategory, string toolType)
+        public State(iMember user, string toolCategory, string toolType)
         {
-            UserType = userType;
+            User = user;
             ToolCategory = toolCategory;
             ToolType = toolType;
         }

@@ -7,7 +7,8 @@ namespace Assignment
     {
         static void Main(string[] args)
         {
-            new MainMenu().Display();
+            Menu mainMenu =  new MainMenu();
+            mainMenu.Display();
         }
     }
 }

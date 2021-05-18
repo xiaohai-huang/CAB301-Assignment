@@ -38,7 +38,8 @@ namespace Assignment
 
         public void borrowTool(iMember aMember, iTool aTool)
         {
-            throw new NotImplementedException();
+            aMember.addTool(aTool);
+            aTool.addBorrower(aMember);
         }
 
         public void delete(iTool aTool)
@@ -64,7 +65,12 @@ namespace Assignment
 
         public void displayBorrowingTools(iMember aMember)
         {
-            throw new NotImplementedException();
+            string[] tools = aMember.Tools;
+            int num = 1;
+            Array.ForEach(tools, tool =>
+            {
+                Console.WriteLine($"{num}. {tool}");
+            });
         }
 
         public void displayTools(string aToolType)
@@ -100,12 +106,13 @@ namespace Assignment
 
         public string[] listTools(iMember aMember)
         {
-            throw new NotImplementedException();
+            return aMember.Tools;
         }
 
         public void returnTool(iMember aMember, iTool aTool)
         {
-            throw new NotImplementedException();
+            aMember.deleteTool(aTool);
+            aTool.deleteBorrower(aMember); // test multiple users that are borrowing the same tool
         }
     }
 }
