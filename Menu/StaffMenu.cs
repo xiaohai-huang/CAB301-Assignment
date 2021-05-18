@@ -218,7 +218,7 @@ namespace Assignment
             string lastName = GetStringInput("Enter the last name of the user - ");
             
             string result = $"Successfully removed the member {firstName} {lastName} from library!\n";
-            // add to the database
+            // remove from the database
             iMember member = new Member(firstName, lastName);
             try
             {
@@ -235,7 +235,26 @@ namespace Assignment
         }
         private void HandleFindContactNumber()
         {
-            throw new NotImplementedException();
+            string title = "Find the Contact Number of a Member";
+            Console.WriteLine(title + "\n");
+            Console.WriteLine(Line(title) + "\n");
+            string firstName = GetStringInput("Enter the first name of the user - ");
+            string lastName = GetStringInput("Enter the last name of the user - ");
+
+            
+            iMember member = new Member(firstName, lastName);
+            bool exist = memberData.search(member);
+            if(exist)
+            {
+                Console.WriteLine($"{member}'s Contact Number is {member.ContactNumber}");
+            }
+            else
+            {
+                Console.WriteLine($"{member} does not exist!");
+            }
+            Console.ReadLine();
+            // go back to staff menu
+            GoBack();
         }
         /// <summary>
         /// Go back to the menu.
