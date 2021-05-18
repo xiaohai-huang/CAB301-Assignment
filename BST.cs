@@ -79,7 +79,7 @@ namespace Assignment
             }
         }
 
-        public bool Search(E item)
+        public E Search(E item)
         {
             Node<E> current = root;
             while (current != null)
@@ -97,10 +97,10 @@ namespace Assignment
                 }
                 else // the item is equal to the current node
                 {
-                    return true;
+                    return current.data;
                 }
             }
-            return false;
+            return default;
         }
 
         // there are three cases to consider:

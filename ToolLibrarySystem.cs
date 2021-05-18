@@ -8,41 +8,22 @@ namespace Assignment
     {
         private static Dictionary<string, Dictionary<string, iToolCollection>> toolData;
         private static iMemberCollection memebrData;
-        private static iTool selectedTool;
-        public ToolLibrarySystem(iMemberCollection memebrData)
+        private static State state;
+        public ToolLibrarySystem(Dictionary<string, Dictionary<string, iToolCollection>> toolData, iMemberCollection memebrData, State state)
         {
-            if(toolData==null)
-            {
-                toolData = new Dictionary<string, Dictionary<string, iToolCollection>>();
-                // populate categories and tool types
-                string[] categories = Data.GetCategories();
-                Array.ForEach(categories, category =>
-            {
-                toolData.Add(category, new Dictionary<string, iToolCollection>());
-                // add tool types to the category
-                string[] toolTypes = Data.GetToolTypesByCategory(category);
-                Array.ForEach(toolTypes, toolType =>
-                {
-                    toolData[category].Add(toolType, new ToolCollection());
-                });
-            });
-            }
 
+            ToolLibrarySystem.toolData = toolData;
             ToolLibrarySystem.memebrData = memebrData;
+            ToolLibrarySystem.state = state;
         }
 
         public void add(iTool aTool)
         {
-            State state = Store.GetState();
             toolData[state.ToolCategory][state.ToolType].add(aTool);
         }
 
         public void add(iTool aTool, int quantity)
         {
-            // use the tool from "displayTools" method
-            if (aTool == null) aTool = selectedTool;
-
-            State state = Store.GetState();
             iToolCollection oldTools = toolData[state.ToolCategory][state.ToolType];
             iTool oldTool = Array.Find(oldTools.toArray(), tool => tool.Name == aTool.Name);
             oldTool.Quantity += quantity;
@@ -62,29 +43,16 @@ namespace Assignment
 
         public void delete(iTool aTool)
         {
-            // use the tool from "displayTools" method
-            if (aTool == null) aTool = selectedTool;
-            State state = Store.GetState();
             iToolCollection tools = toolData[state.ToolCategory][state.ToolType];
             tools.delete(aTool);
         }
 
         public void delete(iTool aTool, int quantity)
         {
-            // use the tool from "displayTools" method
-            if (aTool == null) aTool = selectedTool;
-            State state = Store.GetState();
             iToolCollection tools = toolData[state.ToolCategory][state.ToolType];
             iTool tool = Array.Find(tools.toArray(), tool => tool.Name == aTool.Name);
-            try
-            {
-                tool.Quantity -= quantity;
-                Console.WriteLine($"Updated the quantity of the tool in the library to {Math.Max(tool.Quantity, 0)}");
-            }
-            catch (ArgumentException e)
-            {
-                Console.WriteLine(e.Message);
-            }
+            tool.Quantity -= quantity;
+         
         }
 
         public void delete(iMember aMember)
@@ -99,7 +67,6 @@ namespace Assignment
 
         public void displayTools(string aToolType)
         {
-            State state = Store.GetState();
             iTool[] tools = toolData[state.ToolCategory][aToolType].toArray();
             int num = 1;
             string title = "Tool Type List of Tools";
@@ -120,8 +87,7 @@ namespace Assignment
                 num++;
             });
 
-            int option = Menu.GetUserOption("Select a tool - ",1,tools.Length);
-            selectedTool = tools[option - 1];
+            
         }
 
         public void displayTopTHree()

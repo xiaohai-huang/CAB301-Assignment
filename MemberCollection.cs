@@ -24,7 +24,12 @@ namespace Assignment
 
         public bool search(iMember aMember)
         {
-            return members.Search(aMember);
+            iMember member =  members.Search(aMember);
+            if (member == null) return false;
+            // populate memeber data
+            aMember.ContactNumber = member.ContactNumber;
+            aMember.PIN = member.PIN;
+            return true;
         }
 
         public iMember[] toArray()

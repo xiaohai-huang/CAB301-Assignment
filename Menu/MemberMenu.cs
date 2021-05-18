@@ -4,9 +4,10 @@ using System.Text;
 
 namespace Assignment
 {
-    class StaffMenu : Menu
+    class MemberMenu : Menu
     {
-        public StaffMenu() : base("Staff Menu", STAFF_MENU_OPTIONS) { }
+        public MemberMenu() : base("Member Menu", MEMBER_MENU_OPTIONS) { }
+
         public override void Display()
         {
             Console.Clear();
@@ -16,65 +17,70 @@ namespace Assignment
             switch (UserOption)
             {
                 case 1:
-                    HandleAddNewTool();
+                    HandleDisplayToolsByType();
                     break;
                 case 2:
-                    HandleAddToolQty();
+                    HandleBorrowTool();
                     break;
                 case 3:
-                    HandleRemoveToolQty();
+                    HandleReturnTool();
                     break;
                 case 4:
-                    HandleMemeberRegister();
+                    HandleListToolsHolding();
                     break;
-
+                case 5:
+                    HandleDisplayToThree();
+                    break;
 
                 case 0:
                     new MainMenu().Display();
                     break;
             }
         }
-        private void HandleAddNewTool()
+
+ 
+
+        private void HandleDisplayToolsByType()
         {
             string[] categories = Data.GetCategories();
 
-            string title = "Add a New Tool to Library";
+            string title = "Display tools by tool type";
             Console.WriteLine(title + "\n");
             Console.WriteLine(Line(title));
-            // TODO: input validation
-            Console.Write("Enter the name of the new Tool: ");
-            string toolName = Console.ReadLine();
-            Console.WriteLine();
 
             Menu categoryMenu = new Menu("Select the category", categories, false);
             categoryMenu.Display();
             string category = categories[categoryMenu.UserOption - 1];
+
+
             string[] toolTypes = Data.GetToolTypesByCategory(category);
             Console.WriteLine($"Tool Types under {category} category");
             Menu toolTypesMenu = new Menu("Select the tool type", toolTypes, false);
             toolTypesMenu.Display();
 
+
             // a category might not have any tool types
             if (toolTypesMenu.UserOption != -1)
             {
                 string toolType = toolTypes[toolTypesMenu.UserOption - 1];
-                // save the state
+                // save user input to state
                 state.ToolCategory = category;
                 state.ToolType = toolType;
 
-                iTool tool = new Tool(toolName, 0);
-                toolLibrarySystem.add(tool);
+                toolLibrarySystem.displayTools(toolType);
+
             }
             else
             {
-                Console.WriteLine("Unable to add this tool to library. No tool type is selected!");
+                Console.WriteLine("There is no tool under this category!");
             }
-            Console.WriteLine($"Successfully added a new tool with name - {toolName} to library!");
+
             Console.ReadLine();
             // go back to staff menu
             GoBack();
         }
-        private void HandleAddToolQty()
+
+        private void HandleBorrowTool()
         {
             string title = "Update Existing Tool Stock Level";
             Console.WriteLine(title + "\n");
@@ -98,32 +104,24 @@ namespace Assignment
                 // save user input to state
                 state.ToolCategory = category;
                 state.ToolType = toolType;
-                iTool[] tools = toolData[state.ToolCategory][state.ToolType].toArray();
-                if(tools.Length==0)
-                {
-                    Console.WriteLine($"There is no tool under {toolType} tool type.");
-                }
-                else
-                {
-                    toolLibrarySystem.displayTools(toolType);
 
-                    int toolNumber = GetUserOption("Select a tool from the table - ", 1, tools.Length);
-                    int quantity = GetUserOption("Enter the quantity to add into the library - ", 1, int.MaxValue);
-                    Console.WriteLine();
-                    iTool tool = tools[toolNumber - 1];
-                    toolLibrarySystem.add(tool, quantity);
-                    Console.WriteLine($"Updated the quantity of the tool in the library to {tool.Quantity}");
-                }
+                toolLibrarySystem.displayTools(toolType);
+
+                int quantity = GetUserOption("Enter the quantity to add into the library - ", 1, int.MaxValue);
+                Console.WriteLine();
+                toolLibrarySystem.add(null, quantity);
+                Console.WriteLine($"Updated the quantity of the tool in the library to {quantity}");
             }
             else
             {
-                Console.WriteLine("There is no tool type under this category!");
+                Console.WriteLine("There is no tool under this category!");
             }
             Console.ReadLine();
             // go back to staff menu
             GoBack();
         }
-        private void HandleRemoveToolQty()
+
+        private void HandleReturnTool()
         {
             string title = "Delete Existing Tool from Library";
             Console.WriteLine(title + "\n");
@@ -148,23 +146,11 @@ namespace Assignment
                 state.ToolCategory = category;
                 state.ToolType = toolType;
 
-                iTool[] tools = toolData[state.ToolCategory][state.ToolType].toArray();
                 toolLibrarySystem.displayTools(toolType);
-
-                int toolNumber = GetUserOption("Select a tool from the table - ", 1, tools.Length);
 
                 int quantity = GetUserOption("Enter the quantity to remove from the library - ", 1, int.MaxValue);
                 Console.WriteLine();
-                iTool tool = tools[toolNumber - 1];
-                try
-                {
-                    toolLibrarySystem.delete(tool, quantity);
-                    Console.WriteLine($"Decreased the quantity of the tool in the library to {tool.Quantity}");
-                }
-                catch (ArgumentException e)
-                {
-                    Console.WriteLine(e.Message);
-                }
+                toolLibrarySystem.delete(null, quantity);
 
             }
             else
@@ -175,7 +161,8 @@ namespace Assignment
             // go back to staff menu
             GoBack();
         }
-        private void HandleMemeberRegister()
+
+        private void HandleListToolsHolding()
         {
             string title = "Register New Member with Library";
             Console.WriteLine(title + "\n");
@@ -201,6 +188,12 @@ namespace Assignment
             // go back to staff menu
             GoBack();
         }
+
+        private void HandleDisplayToThree()
+        {
+            throw new NotImplementedException();
+        }
+
         /// <summary>
         /// Go back to the menu.
         /// </summary>
@@ -208,5 +201,7 @@ namespace Assignment
         {
             Display();
         }
+
+
     }
 }
