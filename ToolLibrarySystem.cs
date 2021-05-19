@@ -106,30 +106,50 @@ namespace Assignment
 
         public void displayTopTHree()
         {
+            // iterate over the dictionary and store all the tools in a List
             List<iTool> allTools = new List<iTool>();
-            foreach(string category in toolData.Keys)
+            foreach (string category in toolData.Keys)
             {
                 // tools under a tool type
-                foreach(string toolType in toolData[category].Keys)
+                foreach (string toolType in toolData[category].Keys)
                 {
                     Array.ForEach(toolData[category][toolType].toArray(), tool =>
                     {
-                        if(tool!=null) allTools.Add(tool);
+                        if (tool != null) allTools.Add(tool);
                     });
                 }
             }
-            
-            
-            
+
+
+
             iTool[] tools = allTools.ToArray();
-            // sort in desc order
-            // slice first 3
-            Array.Sort(tools);
+            const int TOP_THREE = 3;
+            Queue<iTool> topThree = new Queue<iTool>();
+            // find three largest numbers
+            for (int i = 0; i < TOP_THREE; i++)
+            {
+                int max = -1;
+                int largestIndex = -1;
+                for (int index = 0; index < tools.Length; index++)
+                {
+                    iTool tool = tools[index];
+                    if (tool != null && tool.NoBorrowings >= max)
+                    {
+                        max = tool.NoBorrowings;
+                        largestIndex = index;
+                    }
+                }
+                topThree.Enqueue(tools[largestIndex]);
+                tools[largestIndex] = null;
+            }
+
             int num = 1;
-            Array.ForEach(tools[..3], tool => {
-                Console.WriteLine($"{num}. {tool.Name} num borrowed: {tool.NoBorrowings}");
+            while (topThree.Count != 0)
+            {
+                iTool tool = topThree.Dequeue();
+                Console.WriteLine($"{num}. {tool.Name,-50} --- Borrowed {tool.NoBorrowings} times");
                 num++;
-            });
+            }
         }
 
         public string[] listTools(iMember aMember)

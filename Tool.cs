@@ -8,10 +8,15 @@ namespace Assignment
     {
         public string Name { get; set; }
         private int quantity;
-        public int Quantity { get {
+        public int Quantity
+        {
+            get
+            {
                 return quantity;
-            } set { 
-                if(value >= GetBorrowers.Number)
+            }
+            set
+            {
+                if (value >= GetBorrowers.Number)
                 {
                     quantity = value;
                 }
@@ -19,7 +24,8 @@ namespace Assignment
                 {
                     throw new ArgumentException("Failed to decrease the tool's quantity.");
                 }
-            } }
+            }
+        }
         private int availableQuantity;
         public int AvailableQuantity
         {
@@ -66,7 +72,7 @@ namespace Assignment
         }
         public void addBorrower(iMember aMember)
         {
-            if (AvailableQuantity>0)
+            if (AvailableQuantity > 0)
             {
                 borrowers.add(aMember);
                 NoBorrowings++;
@@ -106,9 +112,9 @@ namespace Assignment
             return ID;
         }
 
-        public int CompareTo( iTool other)
+        public int CompareTo(iTool other)
         {
-            return  other.NoBorrowings - NoBorrowings;
+            return other.NoBorrowings - NoBorrowings;
         }
     }
 }
