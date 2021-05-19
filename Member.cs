@@ -30,11 +30,19 @@ namespace Assignment
 
         public string[] Tools
         {
-            get;
+            get
+            {
+                string[] toolNames = new string[toolObjects.Count];
+                for(int i =0;i<toolObjects.Count;i++)
+                {
+                    toolNames[i] = toolObjects[i].Name;
+                }
+                return toolNames;
+            }
         }
+        
         private const int MAX_TOOLS = 3;
-        private int numTools;
-
+        private List<iTool> toolObjects;
         public Member() { }
         public Member(string firstName, string lastName, string contactNumber, string pin)
         {
@@ -42,24 +50,19 @@ namespace Assignment
             LastName = lastName;
             ContactNumber = contactNumber;
             PIN = pin;
-            Tools = new string[MAX_TOOLS];
-            numTools = 0;
+            toolObjects = new List<iTool>(MAX_TOOLS);
         }
         public Member(string firstName, string lastName)
         {
             FirstName = firstName;
             LastName = lastName;
-            Tools = new string[MAX_TOOLS];
-            numTools = 0;
+            toolObjects = new List<iTool>(MAX_TOOLS);
         }
         public void addTool(iTool aTool)
         {
-            if (numTools < 3)
+            if (toolObjects.Count< MAX_TOOLS)
             {
-                // find an empty slot to insert the tool
-                int index = Array.FindIndex(Tools, tool => tool == null);
-                Tools[index] = aTool.Name;
-                numTools++;
+                toolObjects.Add(aTool);
             }
             else
             {
@@ -69,15 +72,15 @@ namespace Assignment
 
         public void deleteTool(iTool aTool)
         {
-            if (numTools == 0) throw new Exception("This member is not holding any tools.");
-            // find the tool in the Tools array
-            int toolIndex = Array.FindIndex(Tools, t => t == aTool.Name);
-
+            if (toolObjects.Count == 0) throw new Exception("This member is not holding any tools.");
+            int toolId = aTool.GetHashCode();
+            // find the tool by using id (index) 
+            iTool tool =  toolObjects[toolId];
             // delete the tool
-            if (toolIndex != -1)
+            if (tool != null)
             {
-                Tools[toolIndex] = null;
-                numTools--;
+                tool.deleteBorrower(this);
+                toolObjects.RemoveAt(toolId);
             }
             else
             {
@@ -103,9 +106,13 @@ namespace Assignment
         {
             return string.Compare(GetFullName(this), GetFullName(other));
         }
+        /// <summary>
+        /// A string containing the first name, lastname, and contact phone number of this memeber
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
-            return GetFullName(this);
+            return GetFullName(this) +" "+ ContactNumber;
         }
     }
 }

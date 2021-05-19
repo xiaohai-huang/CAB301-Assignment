@@ -21,7 +21,7 @@ namespace Assignment
         {
             iToolCollection tools = toolData[state.ToolCategory][state.ToolType];
             bool exist = tools.search(aTool);
-            if (exist) throw new ArgumentException("Warning: Failed to add a new tool. Because this tool already exists in the library!");
+            if (exist) throw new ArgumentException("Warning: Failed to add a new tool. Because this tool already exists in this tool type!");
 
             toolData[state.ToolCategory][state.ToolType].add(aTool);
         }
@@ -72,7 +72,9 @@ namespace Assignment
             int num = 1;
             Array.ForEach(tools, tool =>
             {
+                if (tool == null) return;
                 Console.WriteLine($"{num}. {tool}");
+                num++;
             });
         }
 
@@ -104,18 +106,45 @@ namespace Assignment
 
         public void displayTopTHree()
         {
-            throw new NotImplementedException();
+            List<iTool> allTools = new List<iTool>();
+            foreach(string category in toolData.Keys)
+            {
+                // tools under a tool type
+                foreach(string toolType in toolData[category].Keys)
+                {
+                    Array.ForEach(toolData[category][toolType].toArray(), tool =>
+                    {
+                        if(tool!=null) allTools.Add(tool);
+                    });
+                }
+            }
+            
+            
+            
+            iTool[] tools = allTools.ToArray();
+            // sort in desc order
+            // slice first 3
+            Array.Sort(tools);
+            int num = 1;
+            Array.ForEach(tools[..3], tool => {
+                Console.WriteLine($"{num}. {tool.Name} num borrowed: {tool.NoBorrowings}");
+                num++;
+            });
         }
 
         public string[] listTools(iMember aMember)
         {
-            return aMember.Tools;
+            List<string> tools = new List<string>();
+            Array.ForEach(aMember.Tools, tool =>
+            {
+                if (tool != null) tools.Add(tool);
+            });
+            return tools.ToArray();
         }
 
         public void returnTool(iMember aMember, iTool aTool)
         {
-            aMember.deleteTool(aTool);
-            aTool.deleteBorrower(aMember); // test multiple users that are borrowing the same tool
+            aMember.deleteTool(aTool); // test multiple users that are borrowing the same tool
         }
     }
 }

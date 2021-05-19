@@ -5,7 +5,7 @@ using System.Text;
 namespace Assignment
 {
     //The specification of Tool ADT
-    interface iTool
+    interface iTool:IComparable<iTool>
     {
 
         string Name // get and set the name of this tool

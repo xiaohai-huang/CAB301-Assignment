@@ -101,6 +101,10 @@ namespace Assignment
             toolData["Gardening Tools"]["Line Trimmers"].add(new Tool("Ryobi 18V Telescropic Hedge Trimmer", 3));
 
             toolData["Gardening Tools"]["Line Trimmers"].add(new Tool("Ozito 500W Electric Pole Hedge Trimmer", 5));
+
+            toolData["Gardening Tools"]["Line Trimmers"].add(new Tool("same", 2));
+
+            toolData["Gardening Tools"]["Lawn Mowers"].add(new Tool("same", 3));
         }
 
         public static void PopulateMemebrs(iMemberCollection memberData)

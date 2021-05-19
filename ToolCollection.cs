@@ -51,6 +51,7 @@ namespace Assignment
 
         public bool search(iTool aTool)
         {
+            // this assumes that Name is the unique identifier of Tool.
             return Array.FindIndex(tools, tool =>  tool?.Name == aTool.Name) != -1;
         }
 
