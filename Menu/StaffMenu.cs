@@ -14,6 +14,7 @@ namespace Assignment
             Console.WriteLine(greeting);
             base.Display();
             Console.Clear();
+
             switch (UserOption)
             {
                 case 1:
@@ -41,7 +42,6 @@ namespace Assignment
             }
         }
 
-        
 
         private void HandleAddNewTool()
         {
@@ -51,8 +51,7 @@ namespace Assignment
             Console.WriteLine(title + "\n");
             Console.WriteLine(Line(title));
             // TODO: input validation
-            Console.Write("Enter the name of the new Tool: ");
-            string toolName = Console.ReadLine();
+            string toolName = GetStringInput("Enter the name of the new Tool: ");
             Console.WriteLine();
 
             // Display all the nine (9) tool categories
@@ -303,22 +302,6 @@ namespace Assignment
             Display();
         }
    
-        private static string GetPIN(string query, int numDigits)
-        {
-            Regex rx = new Regex(@"[0-9]"+"{"+numDigits+"}", RegexOptions.Compiled);
-            bool valid = false;
-            string pin = null;
-            while(!valid)
-            {
-                Console.Write(query);
-                pin = Console.ReadLine();
-                valid = rx.IsMatch(pin);
-                if(!valid)
-                {
-                    Console.WriteLine($"PIN must be a {numDigits}-digit integer.\n");
-                }
-            }
-            return pin;
-        }
+
     }
 }

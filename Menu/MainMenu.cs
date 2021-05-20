@@ -6,7 +6,7 @@ namespace Assignment
 {
     class MainMenu : Menu
     {
-        public MainMenu() : base("Main Menu", Menu.MAIN_MENU_OPTIONS) { }
+        public MainMenu() : base("Main Menu", MAIN_MENU_OPTIONS) { }
 
         public override void Display()
         {
@@ -47,11 +47,12 @@ namespace Assignment
             {
                 if (attempts >= MAX_ATTEMPTS) break;
                 attempts++;
-                Console.Write("username: ");
-                username = Console.ReadLine();
 
-                Console.Write("password: ");
-                passowrd = Console.ReadLine();
+                username = GetStringInput("username: ");
+
+                passowrd = GetStringInput("passowrd: ");
+
+                // validation
                 valid = username == USER_NAME && passowrd == PASSWORD;
                 if (!(username == null && passowrd == null) && !valid)
                 {
@@ -72,7 +73,10 @@ namespace Assignment
                 new StaffMenu().Display();
             }
         }
-
+        /// <summary>
+        /// The number of digits of PIN
+        /// </summary>
+        private const int NUM_DIGITS = 4;
         private void HandleMemebrLogin()
         {
             iMember member = null;
@@ -86,11 +90,12 @@ namespace Assignment
             {
                 if (attempts >= MAX_ATTEMPTS) break;
                 attempts++;
-                Console.Write("username (FirstNameLastName): ");
-                string username = Console.ReadLine();
 
-                Console.Write("password: ");
-                string passowrd = Console.ReadLine();
+                // obtain user input
+                string username = GetStringInput("username (FirstNameLastName): ");
+
+                string passowrd = GetPIN("password: ", NUM_DIGITS);
+
                 // retrieve the user from database
                 try
                 {

@@ -14,6 +14,7 @@ namespace Assignment
             Console.WriteLine(greeting);
             base.Display();
             Console.Clear();
+
             switch (UserOption)
             {
                 case 1:
@@ -202,6 +203,7 @@ namespace Assignment
             string title = "Top 3 Most Frequently Borrowed Tools";
             Console.WriteLine(title + "\n");
             Console.WriteLine(Line(title) + "\n");
+
             toolLibrarySystem.displayTopTHree();
             Console.ReadLine();
             GoBack();
@@ -214,7 +216,5 @@ namespace Assignment
         {
             Display();
         }
-
-
     }
 }

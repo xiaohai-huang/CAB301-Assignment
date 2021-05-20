@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.RegularExpressions;
 
 namespace Assignment
 {
@@ -25,7 +26,7 @@ namespace Assignment
 
         protected iToolLibrarySystem toolLibrarySystem;
 
-        protected string LINE;
+        protected static string LINE;
 
         protected string greeting = "Welcome to the Tool Library";
 
@@ -43,7 +44,6 @@ namespace Assignment
             "Find the contact number of a member",
             "Return to main menu"
         };
-
         public static readonly string[] MEMBER_MENU_OPTIONS = new string[]
         {
             "Display all the tools of a tool type",
@@ -54,6 +54,9 @@ namespace Assignment
             "Return to main menu"
         };
 
+        /// <summary>
+        /// The state of the App
+        /// </summary>
         protected static State state;
         protected static iMemberCollection memberData;
         protected static Dictionary<string, Dictionary<string, iToolCollection>> toolData;
@@ -78,6 +81,8 @@ namespace Assignment
                 });
             });
 
+            LINE = Line(10);
+
             // populate data
             Data.PopulateTools(toolData);
             Data.PopulateMemebrs(memberData);
@@ -87,9 +92,9 @@ namespace Assignment
             Title = title;
             Options = options;
             this.back = back;
-            LINE = Line(10);
             toolLibrarySystem = new ToolLibrarySystem(toolData, memberData, state);
         }
+      
         /// <summary>
         /// Display the menu.
         /// </summary>
@@ -102,6 +107,7 @@ namespace Assignment
             int optionNumber = 1;
 
             Console.WriteLine(top);
+            // options
             Array.ForEach(Options, (option) =>
             {
                 // the last option is exit or go back
@@ -116,6 +122,7 @@ namespace Assignment
 
                 optionNumber++;
             });
+
             Console.WriteLine(bottom);
             Console.WriteLine();
             if (Options.Length == 0)
@@ -128,7 +135,6 @@ namespace Assignment
                 GetUserInput(query);
             }
             Console.WriteLine();
-
         }
 
         private void GetUserInput(string query)
@@ -137,8 +143,15 @@ namespace Assignment
             int upperBound = back ? Options.Length - 1 : Options.Length;
             UserOption = GetUserOption(query, lowerBound, upperBound);
         }
-
-        public static int GetUserOption(string query, int start, int end)
+        
+        /// <summary>
+        /// Get the option selected by the user. Range between (start - end)
+        /// </summary>
+        /// <param name="query">The query</param>
+        /// <param name="start">start (inclusive)</param>
+        /// <param name="end">end (inclusive)</param>
+        /// <returns>The option selected by the user</returns>
+        protected static int GetUserOption(string query, int start, int end)
         {
             bool valid = false;
             int lowerBound = start;
@@ -176,13 +189,28 @@ namespace Assignment
             return option;
         }
 
-        public static string GetStringInput(string query)
+        protected static string GetStringInput(string query)
         {
-            Console.Write(query);
-            return Console.ReadLine();
+            bool valid = false;
+            string result = "";
+            while(!valid)
+            {
+                Console.Write(query);
+                result = Console.ReadLine();
+                if (!string.IsNullOrWhiteSpace(result))
+                {
+                    valid = true;
+                }
+                else
+                {
+                    Console.WriteLine("input should not be empty!\n");
+                }
+            }
+
+            return result;
         }
 
-        public static long GetNumberInput(string query)
+        protected static long GetNumberInput(string query)
         {
             bool valid = false;
             long userInput = -1;
@@ -195,7 +223,7 @@ namespace Assignment
                 }
                 catch (FormatException)
                 {
-                    Console.WriteLine("Phone Number must be a number\n");
+                    Console.WriteLine("input must be a number\n");
                     valid = false;
                 }
             }
@@ -203,6 +231,35 @@ namespace Assignment
             return userInput;
         }
 
+        /// <summary>
+        /// Get user pin
+        /// </summary>
+        /// <param name="query">Query</param>
+        /// <param name="numDigits">The number of digits of the PIN</param>
+        /// <returns>PIN</returns>
+        protected static string GetPIN(string query, int numDigits)
+        {
+            Regex rx = new Regex(@"[0-9]" + "{" + numDigits + "}", RegexOptions.Compiled);
+            bool valid = false;
+            string pin = null;
+            while (!valid)
+            {
+                Console.Write(query);
+                pin = Console.ReadLine();
+                valid = rx.IsMatch(pin);
+                if (!valid)
+                {
+                    Console.WriteLine($"PIN must be a {numDigits}-digit integer.\n");
+                }
+            }
+            return pin;
+        }
+
+        /// <summary>
+        /// A line (======)
+        /// </summary>
+        /// <param name="length">The length of the line</param>
+        /// <returns>A line</returns>
         public static string Line(int length)
         {
             return new string('=', length);
