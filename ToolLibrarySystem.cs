@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Assignment
 {
@@ -115,7 +114,7 @@ namespace Assignment
         public void displayTopTHree()
         {
             // iterate over the dictionary and store all the tools in a List
-            List<iTool> allTools = new List<iTool>();
+            List<iTool> tools = new List<iTool>();
             foreach (string category in toolData.Keys)
             {
                 // tools under a tool type
@@ -123,7 +122,7 @@ namespace Assignment
                 {
                     Array.ForEach(toolData[category][toolType].toArray(), tool =>
                     {
-                        if (tool != null) allTools.Add(tool);
+                        if (tool != null) tools.Add(tool);
                     });
                 }
             }
@@ -137,17 +136,18 @@ namespace Assignment
             {
                 int max = -1;
                 int largestIndex = -1;
-                for (int index = 0; index < allTools.Count; index++)
+                for (int index = 0; index < tools.Count; index++)
                 {
-                    iTool tool = allTools[index];
+                    iTool tool = tools[index];
                     if (tool != null && tool.NoBorrowings >= max)
                     {
                         max = tool.NoBorrowings;
                         largestIndex = index;
                     }
                 }
-                topThree.Enqueue(allTools[largestIndex]);
-                allTools[largestIndex] = null;
+                if (largestIndex == -1) break;
+                topThree.Enqueue(tools[largestIndex]);
+                tools[largestIndex] = null;
             }
 
             int num = 1;
