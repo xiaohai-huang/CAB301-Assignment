@@ -42,8 +42,16 @@ namespace Assignment
 
         public void borrowTool(iMember aMember, iTool aTool)
         {
-            aMember.addTool(aTool);
-            aTool.addBorrower(aMember);
+            // tool might be out of stock, so try to add borrower first
+            if(aTool.AvailableQuantity > 0 && aMember.Tools.Length<3)
+            {
+                aTool.addBorrower(aMember);
+                aMember.addTool(aTool);
+            }
+            else
+            {
+                throw new Exception("Unable to borrow the tool!");
+            }
         }
 
         public void delete(iTool aTool)
@@ -122,7 +130,6 @@ namespace Assignment
 
 
 
-            iTool[] tools = allTools.ToArray();
             const int TOP_THREE = 3;
             Queue<iTool> topThree = new Queue<iTool>();
             // find three largest numbers
@@ -130,17 +137,17 @@ namespace Assignment
             {
                 int max = -1;
                 int largestIndex = -1;
-                for (int index = 0; index < tools.Length; index++)
+                for (int index = 0; index < allTools.Count; index++)
                 {
-                    iTool tool = tools[index];
+                    iTool tool = allTools[index];
                     if (tool != null && tool.NoBorrowings >= max)
                     {
                         max = tool.NoBorrowings;
                         largestIndex = index;
                     }
                 }
-                topThree.Enqueue(tools[largestIndex]);
-                tools[largestIndex] = null;
+                topThree.Enqueue(allTools[largestIndex]);
+                allTools[largestIndex] = null;
             }
 
             int num = 1;

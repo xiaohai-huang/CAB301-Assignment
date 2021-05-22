@@ -237,40 +237,6 @@ namespace Assignment
             return 1 + Math.Max(leftHeight, rightHeight);
         }
 
-        public static int GetHeightIterative(Node<E> root)
-        {
-            // level order traversal
-            Queue<Node<E>> queue = new Queue<Node<E>>();
-            int height = 0;
-            queue.Enqueue(root);
-
-            while (queue.Count > 0)
-            {
-                int numNodesAtCurrentLevel = queue.Count;
-
-                // level by level
-                while (numNodesAtCurrentLevel > 0)
-                {
-                    // visit all nodes at the current level
-                    Node<E> node = queue.Dequeue();
-
-                    // adds left and right child of the node visted to the queue
-                    // these children will be visted at the iteration
-                    if (node.LeftChild != null)
-                    {
-                        queue.Enqueue(node.LeftChild);
-                    }
-                    if (node.RightChild != null)
-                    {
-                        queue.Enqueue(node.RightChild);
-                    }
-                    numNodesAtCurrentLevel--;
-                }
-                height++;
-            }
-            return height;
-        }
-
         /// <summary>
         /// Incldues the input node itself - BFS
         /// </summary>

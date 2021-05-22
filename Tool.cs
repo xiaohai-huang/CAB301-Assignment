@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Assignment
 {
@@ -41,19 +39,13 @@ namespace Assignment
             get; set;
         }
 
-        public iMemberCollection GetBorrowers
-        {
-            get
-            {
-                return borrowers;
-            }
-        }
-        private iMemberCollection borrowers;
+        public iMemberCollection GetBorrowers { get; }
+
         private int ID;
         public Tool(string name, int quantity)
         {
             Name = name;
-            borrowers = new MemberCollection();
+            GetBorrowers = new MemberCollection();
             Quantity = quantity;
         }
         /// <summary>
@@ -65,7 +57,7 @@ namespace Assignment
         public Tool(string name, int quantity, int id)
         {
             Name = name;
-            borrowers = new MemberCollection();
+            GetBorrowers = new MemberCollection();
             Quantity = quantity;
             ID = id;
 
@@ -74,7 +66,7 @@ namespace Assignment
         {
             if (AvailableQuantity > 0)
             {
-                borrowers.add(aMember);
+                GetBorrowers.add(aMember);
                 NoBorrowings++;
             }
             else
@@ -85,10 +77,10 @@ namespace Assignment
 
         public void deleteBorrower(iMember aMember)
         {
-            bool exist = borrowers.search(aMember);
+            bool exist = GetBorrowers.search(aMember);
             if (exist)
             {
-                borrowers.delete(aMember);
+                GetBorrowers.delete(aMember);
             }
             else
             {

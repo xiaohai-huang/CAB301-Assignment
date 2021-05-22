@@ -284,7 +284,7 @@ namespace Assignment
             bool exist = memberData.search(member);
             if(exist)
             {
-                Console.WriteLine($"{member}'s Contact Number is {member.ContactNumber}");
+                Console.WriteLine($"{member.FirstName} {member.LastName}'s Contact Number is {member.ContactNumber}");
             }
             else
             {

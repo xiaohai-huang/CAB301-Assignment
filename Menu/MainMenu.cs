@@ -27,12 +27,9 @@ namespace Assignment
             }
         }
 
-        // TODO: change password to "today123"
         private const int MAX_ATTEMPTS = 3;
-        //private const string USER_NAME = "staff";
-        //private const string PASSWORD = "today123";
-        private const string USER_NAME = "s";
-        private const string PASSWORD = "123";
+        private const string USER_NAME = "staff";
+        private const string PASSWORD = "today123";
         private void HandleStaffLogin()
         {
             string username;

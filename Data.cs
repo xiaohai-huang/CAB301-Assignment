@@ -109,7 +109,7 @@ namespace Assignment
 
         public static void PopulateMemebrs(iMemberCollection memberData)
         {
-            iMember member = GetMember();// Baorong Huang, PIN 666
+            iMember member = GetMember();
             memberData.add(member);
         }
     }

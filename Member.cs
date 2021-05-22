@@ -74,8 +74,11 @@ namespace Assignment
         {
             if (toolObjects.Count == 0) throw new Exception("This member is not holding any tools.");
             int toolId = aTool.GetHashCode();
+
             // find the tool by using id (index) 
             iTool tool =  toolObjects[toolId];
+            if (tool.Name != aTool.Name) throw new Exception("Tool id and tool name does not match!");
+
             // delete the tool
             if (tool != null)
             {
