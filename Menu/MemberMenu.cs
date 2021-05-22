@@ -73,11 +73,20 @@ namespace Assignment
                 state.ToolType = toolType;
 
                 // Display the information about all the tools of the selected tool type
-                toolLibrarySystem.displayTools(toolType);
+                iTool[] tools = toolData[state.ToolCategory][state.ToolType].toArray();
+                if (tools.Length == 0)
+                {
+                    Console.WriteLine($"There is no tool under {toolType} tool type.");
+                }
+                else
+                {
+                    toolLibrarySystem.displayTools(toolType);
+
+                }
             }
             else
             {
-                Console.WriteLine("There is no tool under this category!");
+                Console.WriteLine("There is no tool type under this category!");
             }
 
             Console.ReadLine();
