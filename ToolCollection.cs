@@ -1,25 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Assignment
 {
     class ToolCollection : iToolCollection
     {
-        public int Number
-        {
-            get
-            {
-                return number;
-            }
-        }
+        public int Number { get; private set; }
         private const int MAX_LENGTH = 30;
         private iTool[] tools;
-        private int number;
 
         public ToolCollection()
         {
-            number = 0;
+            Number = 0;
             tools = new Tool[MAX_LENGTH];
         }
 
@@ -30,7 +21,7 @@ namespace Assignment
                 // Find an empty slot to insert
                 int index = Array.FindIndex(tools, tool => tool==null);
                 tools[index] = aTool;
-                number++;
+                Number++;
             }
             else
             {
@@ -44,7 +35,7 @@ namespace Assignment
             if (index != -1)
             {
                 tools[index] = null;
-                number--;
+                Number--;
             }
             throw new ArgumentException($"The tool with name: {aTool.Name} does not exist in this collection.");
         }

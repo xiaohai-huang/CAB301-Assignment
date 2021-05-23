@@ -104,7 +104,7 @@ namespace Assignment
 
             toolData["Gardening Tools"]["Line Trimmers"].add(new Tool("same", 2));
 
-            toolData["Gardening Tools"]["Lawn Mowers"].add(new Tool("same", 3));
+            toolData["Gardening Tools"]["Lawn Mowers"].add(new Tool("same", 10));
         }
 
         public static void PopulateMemebrs(iMemberCollection memberData)
