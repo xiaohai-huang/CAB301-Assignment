@@ -5,18 +5,18 @@ namespace Assignment
     class ToolCollection : iToolCollection
     {
         public int Number { get; private set; }
-        private const int MAX_LENGTH = 30;
+        private int capacity;
         private iTool[] tools;
 
-        public ToolCollection()
+        public ToolCollection(int capacity=30)
         {
             Number = 0;
-            tools = new Tool[MAX_LENGTH];
+            this.capacity = capacity;
+            tools = new Tool[capacity];
         }
-
         public void add(iTool aTool)
         {
-            if(Number < MAX_LENGTH)
+            if(Number < capacity)
             {
                 // Find an empty slot to insert
                 int index = Array.FindIndex(tools, tool => tool==null);
@@ -37,7 +37,10 @@ namespace Assignment
                 tools[index] = null;
                 Number--;
             }
-            throw new ArgumentException($"The tool with name: {aTool.Name} does not exist in this collection.");
+            else
+            {
+                throw new ArgumentException($"The tool with name: {aTool.Name} does not exist in this collection.");
+            }
         }
 
         public bool search(iTool aTool)
