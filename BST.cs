@@ -120,14 +120,11 @@ namespace Assignment
             // find the item
             Node<E> nodeToDelete = root;
             Node<E> parent = null;
-            while (root != null)
+            while (item.CompareTo(nodeToDelete.data) != 0)
             {
                 parent = nodeToDelete;
-                if (item.CompareTo(nodeToDelete.data) == 0)
-                {
-                    break;
-                }
-                else if (item.CompareTo(nodeToDelete.data) < 0)
+               
+                if (item.CompareTo(nodeToDelete.data) < 0)
                 {
                     nodeToDelete = nodeToDelete.LeftChild;
                 }
